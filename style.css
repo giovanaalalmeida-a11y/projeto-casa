@@ -60,26 +60,22 @@ h3{font-size:1.5rem;margin:4px 0}
 .gifts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin:50px 0}.gift{min-height:220px;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);display:grid;place-items:center;background:var(--red);color:white;transition:.25s}.gift:nth-child(2){background:var(--blue)}.gift:nth-child(3){background:var(--green)}.gift:nth-child(4){background:var(--yellow);color:var(--ink)}.gift:hover{transform:translateY(-8px) rotate(-2deg)}.gift span{font-size:70px;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.18))}.gift small{text-transform:uppercase;letter-spacing:.1em}
 .modal{position:fixed;z-index:50;inset:0;background:rgba(35,48,45,.6);display:grid;place-items:center;padding:20px}.modal-card{position:relative;background:var(--paper);border:3px solid var(--ink);box-shadow:12px 12px 0 var(--red);padding:45px;max-width:620px;width:100%;text-align:center;animation:pop .35s ease}.close{position:absolute;right:12px;top:10px;border:0;background:none;font-size:32px}.big-gift{font-size:80px;animation:bob 1.2s ease-in-out infinite}.hotcold{margin-top:25px;padding:16px;background:#eef5ff;border:2px dashed var(--blue);line-height:1.7}
 .final-section{background:radial-gradient(circle at 50% 35%,#fffdf5 0 20%,#fff8e9 65%)}
-.worm-stage{min-height:430px;position:relative;max-width:900px;margin:10px auto 0;overflow:hidden}
-.worm-art{width:min(760px,100%);margin:0 auto;position:relative;z-index:2}
-.worm-art svg{display:block;width:100%;height:auto;overflow:visible}
-.worm-character{transform-box:fill-box;transform-origin:center;transition:transform 2.2s cubic-bezier(.2,.8,.2,1)}
-.worm-pink{transform:translateX(-70px) rotate(-2deg)}
-.worm-blue{transform:translateX(70px) rotate(2deg)}
-.worm-character .segment{stroke:#9f5869;stroke-width:5;stroke-linecap:round;opacity:.65}
-.worm-blue .segment{stroke:#47769d}
-.worm-body-outline{stroke:#23302d}
-.worm-heart{opacity:0;transform-origin:center;transform-box:fill-box;transform:scale(.2);transition:1s .9s}
-.worm-heart text{font-family:Georgia,serif;font-size:42px;fill:var(--red)}
-.worm-stage.hug .worm-pink{transform:translateX(30px) rotate(-5deg)}
-.worm-stage.hug .worm-blue{transform:translateX(-30px) rotate(5deg)}
-.worm-stage.hug .worm-heart{opacity:1;transform:scale(1)}
-.worm-note{display:flex;align-items:center;justify-content:center;gap:12px;max-width:650px;margin:-25px auto 5px;position:relative;z-index:4}
-.worm-note p{margin:0;text-align:left;font-family:"DM Mono",monospace;font-size:.85rem;line-height:1.55}
-.worm-note em{color:var(--red);font-style:normal;font-weight:bold}
-.worm-note strong{color:var(--ink)}
-.color-arrow{display:inline-block;font-family:Georgia,serif;font-size:86px;font-weight:bold;line-height:.7;background:linear-gradient(135deg,var(--red),var(--yellow),var(--green),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(18deg) translateY(-8px);text-shadow:2px 2px 0 rgba(35,48,45,.08)}
-.final-message{text-align:center;font-family:"Playfair Display",serif;font-size:1.5rem}.big-final{font-size:clamp(2rem,5vw,4rem);color:var(--red);margin:20px 0}.tiny-btn{border:0;background:none;text-decoration:underline;margin-top:25px;color:var(--blue)}.ps{max-width:600px;margin:20px auto;padding:28px;border:2px dashed var(--red);background:#fff0f0;font-family:"Playfair Display",serif;font-size:1.3rem}.ps strong,.ps span{display:block;margin-top:15px}.ps strong{color:var(--red)}
+.worm-stage{height:360px;position:relative;max-width:760px;margin:25px auto 0;overflow:hidden}
+.cartoon-worm{position:absolute;width:285px;height:155px;top:105px;transition:4s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(4px 5px 0 rgba(35,48,45,.15))}
+.cartoon-worm .worm-body{position:absolute;left:20px;top:43px;width:220px;height:76px;border-radius:55% 45% 52% 48%;border:4px solid var(--ink);transform:rotate(8deg)}
+.worm-left .worm-body{background:#e78b9a}.worm-right .worm-body{background:#78a9d6;transform:rotate(-8deg)}
+.segment{position:absolute;top:7px;width:4px;height:61px;background:rgba(35,48,45,.25);border-radius:4px}
+.s1{left:28px}.s2{left:62px}.s3{left:96px}.s4{left:130px}.s5{left:164px}.s6{left:198px}
+.worm-head{position:absolute;width:92px;height:82px;border:4px solid var(--ink);border-radius:58% 50% 55% 45%;top:20px;background:inherit;z-index:2}
+.worm-left .worm-head{right:3px;background:#e78b9a;transform:rotate(8deg)}.worm-right .worm-head{left:3px;background:#78a9d6;transform:rotate(-8deg)}
+.worm-head i{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--ink);top:22px}
+.worm-left .worm-head i:first-child{left:27px}.worm-left .worm-head i:nth-child(2){left:49px}.worm-right .worm-head i:first-child{right:49px}.worm-right .worm-head i:nth-child(2){right:27px}
+.worm-head b{position:absolute;width:27px;height:14px;border-bottom:3px solid var(--ink);border-radius:50%;bottom:19px;left:30px}
+.worm-left{left:2%;transform:rotate(-7deg)}.worm-right{right:2%;transform:rotate(7deg)}
+.worm-stage.hug .worm-left{left:29%;transform:rotate(16deg)}.worm-stage.hug .worm-right{right:29%;transform:rotate(-16deg)}
+.hug-hearts{position:absolute;left:50%;top:55px;transform:translateX(-50%) scale(.3);color:var(--red);font-size:38px;opacity:0;transition:1.2s .9s;letter-spacing:8px;z-index:5}.worm-stage.hug .hug-hearts{opacity:1;transform:translateX(-50%) scale(1)}
+.worm-note{display:flex;align-items:center;justify-content:center;gap:14px;max-width:650px;margin:-10px auto 12px;position:relative;z-index:4}.worm-note p{margin:0;text-align:left;font-family:"DM Mono",monospace;font-size:.85rem;line-height:1.55}.worm-note em{color:var(--red);font-style:normal;font-weight:bold}.worm-note strong{color:var(--ink)}.color-arrow{display:inline-block;font-family:Georgia,serif;font-size:78px;font-weight:bold;line-height:.7;background:linear-gradient(135deg,var(--red),var(--yellow),var(--green),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(-4px);text-shadow:2px 2px 0 rgba(35,48,45,.08)}
+@media(max-width:720px){.worm-stage{height:320px}.cartoon-worm{width:210px;height:125px}.cartoon-worm .worm-body{width:160px;height:62px;top:42px}.worm-head{width:76px;height:70px;top:24px}.segment{height:48px}.s1{left:22px}.s2{left:48px}.s3{left:74px}.s4{left:100px}.s5{left:126px}.s6{left:150px}.worm-stage.hug .worm-left{left:13%}.worm-stage.hug .worm-right{right:13%}.worm-note{padding:0 14px}.color-arrow{font-size:60px}}
 #duckLayer{position:fixed;z-index:9999;inset:0;pointer-events:none;overflow:hidden}
 .duck{position:fixed;z-index:9999;pointer-events:auto;font-size:52px;cursor:pointer;filter:drop-shadow(3px 4px 0 rgba(35,48,45,.15));animation:none!important;transform:none!important;}
 .duck-stopped{animation:bob 1s infinite}
