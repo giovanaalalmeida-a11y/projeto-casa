@@ -19,7 +19,6 @@ function showSection(id){
   window.scrollTo({top:0,behavior:"smooth"});
   if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
   setTimeout(()=>spawnDuckForCurrentPage(), 350);
-  if(id !== "final") setTimeout(()=>spawnDuckForCurrentPage(), 700);
 }
 
 $$("[data-go]").forEach(btn => btn.addEventListener("click", ()=>showSection(btn.dataset.go)));
@@ -133,38 +132,54 @@ function showToast(text){
 }
 
 const duckMessages=["Eu te amo","Potege","Tão especial"];
-let duckIndex=0;
 let duckShownOnSection=-1;
+let activeDuck=null;
+
+function removeDuck(){
+  if(activeDuck){
+    activeDuck.remove();
+    activeDuck=null;
+  }
+  const layer=$("#duckLayer");
+  if(layer) layer.innerHTML="";
+}
 
 function spawnDuckForCurrentPage(){
-  // Exactly one duck on each of pages 2, 3 and 4.
-  // Page 1 (story) and page 5 (final) have no duck.
-  if(current < 1 || current > 3) return;
-  if(duckShownOnSection === current) return;
+  // Página 1: nenhum pato.
+  // Página 2: pato 1 + "Eu te amo".
+  // Página 3: pato 2 + "Potege".
+  // Página 4: pato 3 + "Tão especial".
+  // Página 5: nenhum pato.
+  if(current < 1 || current > 3) {
+    removeDuck();
+    duckShownOnSection=-1;
+    return;
+  }
 
-  // Remove the duck from the previous page before showing the new one.
-  const layer=$("#duckLayer");
-  layer.innerHTML="";
+  // Se já estamos nessa página, não cria outro.
+  if(duckShownOnSection === current && activeDuck) return;
+
+  // Ao trocar de página, o pato anterior desaparece.
+  removeDuck();
   duckShownOnSection=current;
 
   const messageIndex=current-1;
-  const d=document.createElement("div");
-  d.className="duck duck-still";
-  d.textContent="🦆";
-  d.dataset.msg=duckMessages[messageIndex];
-
   const positions=[
     {top:"18vh",left:"7vw"},
     {top:"70vh",left:"82vw"},
     {top:"22vh",left:"84vw"}
   ];
-  const pos=positions[messageIndex];
-  d.style.top=pos.top;
-  d.style.left=pos.left;
+
+  const d=document.createElement("div");
+  d.className="duck duck-still";
+  d.textContent="🦆";
+  d.dataset.msg=duckMessages[messageIndex];
+  d.style.top=positions[messageIndex].top;
+  d.style.left=positions[messageIndex].left;
 
   const b=document.createElement("div");
   b.className="duck-bubble";
-  b.textContent=d.dataset.msg;
+  b.textContent=duckMessages[messageIndex];
   b.style.display="none";
   d.appendChild(b);
 
@@ -173,12 +188,12 @@ function spawnDuckForCurrentPage(){
     burstHearts(12);
   });
 
-  layer.appendChild(d);
+  $("#duckLayer").appendChild(d);
+  activeDuck=d;
 }
 
-// The first duck appears only when entering page 2.
-// Each following page removes the previous duck and reveals the next one.
-setTimeout(()=>spawnDuckForCurrentPage(),700);
+// Nenhum pato é criado automaticamente fora das páginas 2, 3 e 4.
+// A navegação é quem controla qual dos três aparece.
 
 $("#psButton").addEventListener("click",()=>{
   $("#ps").classList.remove("hidden"); burstHearts(20);
