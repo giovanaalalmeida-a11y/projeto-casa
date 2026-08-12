@@ -17,7 +17,10 @@ function showSection(id){
   $("#progressBar").style.width = `${20 + index*20}%`;
   $("#navLabel").textContent = navNames[index];
   window.scrollTo({top:0,behavior:"smooth"});
-  if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
+  if(id === "final") {
+    removeDuck();
+    setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
+  }
   setTimeout(()=>spawnDuckForCurrentPage(), 350);
 }
 
@@ -120,15 +123,6 @@ function burstHearts(n=12){
   }
 }
 function confetti(){ burstHearts(35); }
-
-// O sorvete só é interativo no item que conta o primeiro encontro.
-const firstDateIcecream = document.querySelector('[data-first-date] .icecream') || document.querySelector('.icecream');
-if(firstDateIcecream){
-  firstDateIcecream.addEventListener("click",()=>{
-    showToast("🍦 Vale outro date na Baixinha?");
-    burstHearts(8);
-  });
-}
 
 function showToast(text){
   const t=$("#toast"); t.textContent=text; t.classList.add("show");
