@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff8e9">
+  <title>Projeto Casa — Gio & Giu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <div id="hearts" class="hearts" aria-hidden="true"></div>
+
+  <div id="intro" class="screen intro-screen">
+    <div class="sunburst"></div>
+    <div class="intro-card paper-card">
+      <div class="duck-badge">🦆</div>
+      <p class="eyebrow">um pequeno universo feito só para você</p>
+      <h1>Para minha<br><span>Mi Amorzito</span></h1>
+      <p>Uma aventura sobre nós duas, nossos detalhes e tudo o que ainda vamos construir.</p>
+      <div class="duck-warning">
+        <strong>⚠ Atenção, Giu!</strong>
+        <br>Patinhos podem aparecer durante sua jornada. Se encontrar um, clique nele. Eles têm coisas importantes para dizer.
+      </div>
+      <button class="main-btn" data-go="story">Começar nossa história ✦</button>
+    </div>
+  </div>
+
+  <main id="app" class="hidden">
+    <nav class="nav">
+      <div class="logo">G + G</div>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div class="nav-label" id="navLabel">nossa história</div>
+    </nav>
+
+    <section id="story" class="section active">
+      <div class="section-inner">
+        <p class="eyebrow">01 · SERRITA</p>
+        <h2>Mozito, lembra disso?</h2>
+        <p class="lead">Foi no meio de um projeto, em Serrita, que duas histórias começaram a se aproximar sem saber ainda o tamanho do que estavam construindo.</p>
+
+        <div class="timeline">
+          <article class="timeline-card">
+            <span class="timeline-icon">🌵</span>
+            <div><small>onde tudo começou</small><h3>Serrita</h3><p>UFPE No Meu Quintal.</p></div>
+          </article>
+          <div class="timeline-line"></div>
+          <article class="timeline-card">
+            <span class="timeline-icon">🍦</span>
+            <div><small>nosso primeiro encontro</small><h3>Sorveteira da Baixinha</h3><p>Um date que merece parte dois.</p></div>
+          </article>
+          <div class="timeline-line"></div>
+          <article class="timeline-card">
+            <span class="timeline-icon">💋</span>
+            <div><small>17 de março de 2026 · 20:54</small><h3>Nosso primeiro beijo de verdade</h3><p>E desde então o relógio continua contando.</p></div>
+          </article>
+        </div>
+
+        <div class="counter-card">
+          <div class="counter-title">tempo desde aquele beijo</div>
+          <div class="counter-grid">
+            <div><strong id="days">0</strong><span>dias</span></div>
+            <div><strong id="hours">0</strong><span>horas</span></div>
+            <div><strong id="minutes">0</strong><span>minutos</span></div>
+            <div><strong id="seconds">0</strong><span>segundos</span></div>
+          </div>
+        </div>
+
+        <div class="secret-object icecream" data-secret="icecream" title="hmm...">🍦</div>
+        <button class="next-btn" data-next="letter">Continuar, Cleitinho →</button>
+      </div>
+    </section>
+
+    <section id="letter" class="section">
+      <div class="section-inner">
+        <p class="eyebrow">02 · UMA CARTA</p>
+        <h2>Momô, preciso te contar uma coisa...</h2>
+        <div class="typewriter">
+          <div class="typewriter-top"><span></span><span></span><span></span><b>GIO — CARTA PARA GIU</b></div>
+          <div class="paper">
+            <p id="letterText"></p><span class="cursor">▌</span>
+          </div>
+        </div>
+        <button id="letterContinue" class="next-btn hidden" data-next="crossword">Eu li tudinho. Continuar →</button>
+      </div>
+    </section>
+
+    <section id="crossword" class="section">
+      <div class="section-inner">
+        <p class="eyebrow">03 · JOGO</p>
+        <h2>Você lembra dos nossos detalhes?</h2>
+        <p class="lead">Complete as quatro respostas. Cada número corresponde a uma dica.</p>
+
+        <div class="crossword-wrap">
+          <div class="clues">
+            <div class="clue"><b>1</b><span>Onde nós demos um selinho pela primeira vez.</span></div>
+            <div class="clue"><b>2</b><span>Nossa música.</span></div>
+            <div class="clue"><b>3</b><span>Nosso dia do primeiro selinho.</span></div>
+            <div class="clue"><b>4</b><span>Quem disse "eu te amo" primeiro.</span></div>
+          </div>
+          <div class="answer-box">
+            <label>1 · <input data-answer="BANCO" maxlength="5" autocomplete="off"></label>
+            <label>2 · <input data-answer="ESOTERICO" maxlength="9" autocomplete="off"></label>
+            <label>3 · <input data-answer="DEZESSEIS" maxlength="9" autocomplete="off"></label>
+            <label>4 · <input data-answer="GIWELLEN" maxlength="8" autocomplete="off"></label>
+          </div>
+        </div>
+        <button id="checkCrossword" class="main-btn">Conferir respostas ✦</button>
+        <p id="crosswordMessage" class="success-message"></p>
+        <button id="crosswordContinue" class="next-btn hidden" data-next="gifts">Muito bem, Giu. Próxima missão →</button>
+      </div>
+    </section>
+
+    <section id="gifts" class="section">
+      <div class="section-inner">
+        <p class="eyebrow">04 · CAÇA AOS PRESENTES</p>
+        <h2>Dois pacotinhos. Uma pista.</h2>
+        <p class="lead">Abra cada presente para descobrir a dica. Depois você pode perguntar para a Gio se está quente ou frio. 🔥❄️</p>
+
+        <div class="gifts-grid">
+          <button class="gift gift-1" data-gift="0"><span>🎁</span><small>presente 1</small></button>
+          <button class="gift gift-2" data-gift="1"><span>🎁</span><small>presente 2</small></button>
+        </div>
+
+        <div id="giftModal" class="modal hidden">
+          <div class="modal-card">
+            <button id="closeGift" class="close">×</button>
+            <div id="giftEmoji" class="big-gift">🎁</div>
+            <p id="giftNumber" class="eyebrow"></p>
+            <h3 id="giftHint"></h3>
+            <p class="hotcold">Agora vá procurar...<br><strong>Você pode perguntar para a Gio se está quente ou frio. 😉</strong></p>
+          </div>
+        </div>
+
+        <p id="giftsDone" class="success-message"></p>
+        <button id="giftsContinue" class="next-btn hidden" data-next="final">Terminei de procurar tudo →</button>
+      </div>
+    </section>
+
+    <section id="final" class="section final-section">
+      <div class="section-inner">
+        <p class="eyebrow">05 · CASA</p>
+        <h2>Chegamos ao fim...</h2>
+        <p class="lead">Ou talvez a uma das muitas versões do começo.</p>
+
+        <div class="worm-stage">
+          <div class="worm worm-left"><span class="eye"></span><span class="eye second"></span><span class="smile"></span></div>
+          <div class="worm worm-right"><span class="eye"></span><span class="eye second"></span><span class="smile"></span></div>
+          <div class="heart-outline">♡</div>
+        </div>
+
+        <div class="final-message">
+          <p>Obrigada por construir uma casa tão bonita comigo.</p>
+          <p class="big-final">Feliz 3 meses, Mi Amorzito.</p>
+          <p>Eu te escolheria infinitas vezes. ❤️</p>
+        </div>
+
+        <button id="psButton" class="tiny-btn">ps...</button>
+        <div id="ps" class="ps hidden">
+          <p>Não consigo lembrar de um único dia em que eu não tenha escolhido você.</p>
+          <strong>Eu te amo.</strong>
+          <span>— Gio</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="duckLayer" aria-hidden="true"></div>
+  <script src="script.js"></script>
+</body>
+</html>
