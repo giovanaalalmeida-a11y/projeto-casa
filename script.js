@@ -8,6 +8,7 @@ const navNames = ["nossa história","uma carta","jogo","presentes","casa"];
 function showSection(id){
   const index = sections.indexOf(id);
   if(index < 0) return;
+  // Sai da tela inicial e revela o aplicativo antes de mostrar a seção escolhida.
   $("#intro").classList.add("hidden");
   $("#app").classList.remove("hidden");
   $$(".section").forEach(s => s.classList.remove("active"));
@@ -17,8 +18,7 @@ function showSection(id){
   $("#navLabel").textContent = navNames[index];
   window.scrollTo({top:0,behavior:"smooth"});
   if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
-  // A mudança de etapa também é uma oportunidade para um patinho aparecer.
-  scheduleDuckForSection();
+  if(id !== "final") setTimeout(()=>{ if(duckIndex<3) spawnDuck(); }, 500);
 }
 
 $$("[data-go]").forEach(btn => btn.addEventListener("click", ()=>showSection(btn.dataset.go)));
@@ -131,51 +131,47 @@ function showToast(text){
   setTimeout(()=>t.classList.remove("show"),2800);
 }
 
-/* PATINHOS SECRETOS — mesma lógica antiga, mas com três aparições garantidas. */
 const duckMessages=["Eu te amo","Potege","Tão especial"];
 let duckIndex=0, lastDuckTime=0;
-let duckTimersStarted=false;
 
-function spawnDuck(force=false){
+function spawnDuck(){
   const now=Date.now();
-  if(!force && now-lastDuckTime<4500) return;
-  if(current===4) return;
-  if(duckIndex>=3) return;
-
+  if(now-lastDuckTime<1800 || duckIndex>=duckMessages.length || current===4) return;
   lastDuckTime=now;
+
   const d=document.createElement("div");
   d.className="duck";
-  d.textContent="🦆";
-  d.style.top=(18+Math.random()*68)+"vh";
-  d.style.left="-70px";
-  d.dataset.msg=duckMessages[duckIndex];
-  duckIndex++;
+  d.style.top=(16+Math.random()*66)+"vh";
+  d.style.left="-75px";
+  d.dataset.msg=duckMessages[duckIndex++];
+
+  const b=document.createElement("div");
+  b.className="duck-bubble";
+  b.textContent=d.dataset.msg;
+  d.appendChild(b);
 
   d.addEventListener("click",()=>{
-    const b=document.createElement("div");
-    b.className="duck-bubble";
     b.textContent=d.dataset.msg;
-    d.appendChild(b);
-    burstHearts(10);
-    setTimeout(()=>d.remove(),2500);
+    b.style.animation="none";
+    requestAnimationFrame(()=>b.style.animation="pop .25s ease");
+    burstHearts(12);
+    setTimeout(()=>d.remove(),2200);
   });
 
   $("#duckLayer").appendChild(d);
-  setTimeout(()=>d.remove(),7200);
+  setTimeout(()=>d.remove(),4200);
 }
 
-function scheduleDuckForSection(){
+/* Os três aparecem rapidamente, um após o outro, assim que a história começa. */
+function launchDucks(){
   if(current===4 || duckIndex>=3) return;
-  // Um patinho após cada avanço, com atraso para ele ser percebido.
-  setTimeout(()=>spawnDuck(true), 1400);
+  [400, 2300, 4200].forEach(delay=>setTimeout(()=>spawnDuck(),delay));
 }
 
-// Primeiro patinho: aparece depois de a primeira página ser aberta.
-// Segundo e terceiro: ao avançar de etapa.
-setTimeout(()=>spawnDuck(true), 6500);
+setTimeout(()=>launchDucks(),700);
 setInterval(()=>{
-  if(current!==4 && duckIndex<3) spawnDuck(true);
-}, 12000);
+  if(current!==4 && duckIndex<3) spawnDuck();
+},2200);
 
 $("#psButton").addEventListener("click",()=>{
   $("#ps").classList.remove("hidden"); burstHearts(20);
