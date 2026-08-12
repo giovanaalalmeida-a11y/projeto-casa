@@ -121,10 +121,14 @@ function burstHearts(n=12){
 }
 function confetti(){ burstHearts(35); }
 
-$(".icecream").addEventListener("click",()=>{
-  showToast("🍦 Vale outro date na Baixinha?");
-  burstHearts(8);
-});
+// O sorvete só é interativo no item que conta o primeiro encontro.
+const firstDateIcecream = document.querySelector('[data-first-date] .icecream') || document.querySelector('.icecream');
+if(firstDateIcecream){
+  firstDateIcecream.addEventListener("click",()=>{
+    showToast("🍦 Vale outro date na Baixinha?");
+    burstHearts(8);
+  });
+}
 
 function showToast(text){
   const t=$("#toast"); t.textContent=text; t.classList.add("show");
