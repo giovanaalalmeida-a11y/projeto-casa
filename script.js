@@ -20,8 +20,9 @@ function showSection(id){
   if(id === "final") {
     removeDuck();
     setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
+  } else {
+    setTimeout(()=>spawnDuckForCurrentPage(), 350);
   }
-  setTimeout(()=>spawnDuckForCurrentPage(), 350);
 }
 
 $$("[data-go]").forEach(btn => btn.addEventListener("click", ()=>showSection(btn.dataset.go)));
