@@ -18,6 +18,7 @@ function showSection(id){
   $("#navLabel").textContent = navNames[index];
   window.scrollTo({top:0,behavior:"smooth"});
   if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
+  setTimeout(()=>spawnDuckForCurrentPage(), 350);
   if(id !== "final") setTimeout(()=>spawnDuckForCurrentPage(), 700);
 }
 
@@ -136,22 +137,28 @@ let duckIndex=0;
 let duckShownOnSection=-1;
 
 function spawnDuckForCurrentPage(){
-  if(current===4 || duckShownOnSection===current || duckIndex>=duckMessages.length) return;
+  // Exactly one duck on each of pages 2, 3 and 4.
+  // Page 1 (story) and page 5 (final) have no duck.
+  if(current < 1 || current > 3) return;
+  if(duckShownOnSection === current) return;
 
+  // Remove the duck from the previous page before showing the new one.
+  const layer=$("#duckLayer");
+  layer.innerHTML="";
   duckShownOnSection=current;
 
+  const messageIndex=current-1;
   const d=document.createElement("div");
   d.className="duck duck-still";
   d.textContent="🦆";
-  d.dataset.msg=duckMessages[duckIndex++];
+  d.dataset.msg=duckMessages[messageIndex];
 
-  // Um canto diferente para cada página.
   const positions=[
     {top:"18vh",left:"7vw"},
-    {top:"72vh",left:"82vw"},
+    {top:"70vh",left:"82vw"},
     {top:"22vh",left:"84vw"}
   ];
-  const pos=positions[duckIndex-1];
+  const pos=positions[messageIndex];
   d.style.top=pos.top;
   d.style.left=pos.left;
 
@@ -166,53 +173,12 @@ function spawnDuckForCurrentPage(){
     burstHearts(12);
   });
 
-  $("#duckLayer").appendChild(d);
+  layer.appendChild(d);
 }
 
-// O primeiro patinho aparece na primeira página.
-// Os próximos aparecem somente quando ela entra na página seguinte.
-// Assim há exatamente UM patinho por página.
-setTimeout(()=>spawnDuckForCurrentPage(),900);
-
-const duckPositions=[
-  {top:"18vh",left:"8vw"},
-  {top:"72vh",left:"84vw"},
-  {top:"42vh",left:"7vw"}
-];
-
-function spawnDuck(){
-  if(duckIndex>=duckMessages.length || current===4) return;
-
-  const d=document.createElement("div");
-  d.className="duck duck-stopped";
-  const pos=duckPositions[duckIndex];
-  d.style.top=pos.top;
-  d.style.left=pos.left;
-  d.dataset.msg=duckMessages[duckIndex];
-
-  const b=document.createElement("div");
-  b.className="duck-bubble hidden";
-  b.textContent=d.dataset.msg;
-  d.appendChild(b);
-
-  d.addEventListener("click",()=>{
-    b.classList.remove("hidden");
-    burstHearts(12);
-    d.classList.add("duck-found");
-    setTimeout(()=>d.remove(),5000);
-  });
-
-  $("#duckLayer").appendChild(d);
-  duckIndex++;
-}
-
-/* Os três patinhos aparecem cedo, ficam parados em cantos diferentes
-   e só desaparecem depois que ela interage com eles. */
-function launchDucks(){
-  if(current===4 || duckIndex>=3) return;
-  [700,2600,4500].forEach(delay=>setTimeout(()=>spawnDuck(),delay));
-}
-setTimeout(launchDucks,500);
+// The first duck appears only when entering page 2.
+// Each following page removes the previous duck and reveals the next one.
+setTimeout(()=>spawnDuckForCurrentPage(),700);
 
 $("#psButton").addEventListener("click",()=>{
   $("#ps").classList.remove("hidden"); burstHearts(20);
