@@ -8,6 +8,9 @@ const navNames = ["nossa história","uma carta","jogo","presentes","casa"];
 function showSection(id){
   const index = sections.indexOf(id);
   if(index < 0) return;
+  // Sai da tela inicial e revela o aplicativo antes de mostrar a seção escolhida.
+  $("#intro").classList.add("hidden");
+  $("#app").classList.remove("hidden");
   $$(".section").forEach(s => s.classList.remove("active"));
   $("#" + id).classList.add("active");
   current = index;
@@ -96,7 +99,7 @@ $$(".gift").forEach(g=>{
     $("#giftHint").textContent=hints[i];
     $("#giftModal").classList.remove("hidden");
     burstHearts(18);
-    if(opened.size===4){
+    if(opened.size===2){
       $("#giftsDone").textContent="Todos os presentes foram descobertos. Agora falta só uma coisa...";
       $("#giftsContinue").classList.remove("hidden");
     }
