@@ -18,6 +18,7 @@ function showSection(id){
   $("#navLabel").textContent = navNames[index];
   window.scrollTo({top:0,behavior:"smooth"});
   if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
+  if(id !== "final") setTimeout(()=>spawnDuckForCurrentPage(), 700);
 }
 
 $$("[data-go]").forEach(btn => btn.addEventListener("click", ()=>showSection(btn.dataset.go)));
@@ -132,6 +133,47 @@ function showToast(text){
 
 const duckMessages=["Eu te amo","Potege","Tão especial"];
 let duckIndex=0;
+let duckShownOnSection=-1;
+
+function spawnDuckForCurrentPage(){
+  if(current===4 || duckShownOnSection===current || duckIndex>=duckMessages.length) return;
+
+  duckShownOnSection=current;
+
+  const d=document.createElement("div");
+  d.className="duck duck-still";
+  d.textContent="🦆";
+  d.dataset.msg=duckMessages[duckIndex++];
+
+  // Um canto diferente para cada página.
+  const positions=[
+    {top:"18vh",left:"7vw"},
+    {top:"72vh",left:"82vw"},
+    {top:"22vh",left:"84vw"}
+  ];
+  const pos=positions[duckIndex-1];
+  d.style.top=pos.top;
+  d.style.left=pos.left;
+
+  const b=document.createElement("div");
+  b.className="duck-bubble";
+  b.textContent=d.dataset.msg;
+  b.style.display="none";
+  d.appendChild(b);
+
+  d.addEventListener("click",()=>{
+    b.style.display="block";
+    burstHearts(12);
+  });
+
+  $("#duckLayer").appendChild(d);
+}
+
+// O primeiro patinho aparece na primeira página.
+// Os próximos aparecem somente quando ela entra na página seguinte.
+// Assim há exatamente UM patinho por página.
+setTimeout(()=>spawnDuckForCurrentPage(),900);
+
 const duckPositions=[
   {top:"18vh",left:"8vw"},
   {top:"72vh",left:"84vw"},
