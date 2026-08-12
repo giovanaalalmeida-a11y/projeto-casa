@@ -18,7 +18,6 @@ function showSection(id){
   $("#navLabel").textContent = navNames[index];
   window.scrollTo({top:0,behavior:"smooth"});
   if(id === "final") setTimeout(()=>$(".worm-stage").classList.add("hug"), 700);
-  if(id !== "final") setTimeout(()=>{ if(duckIndex<3) spawnDuck(); }, 500);
 }
 
 $$("[data-go]").forEach(btn => btn.addEventListener("click", ()=>showSection(btn.dataset.go)));
@@ -132,46 +131,46 @@ function showToast(text){
 }
 
 const duckMessages=["Eu te amo","Potege","Tão especial"];
-let duckIndex=0, lastDuckTime=0;
+let duckIndex=0;
+const duckPositions=[
+  {top:"18vh",left:"8vw"},
+  {top:"72vh",left:"84vw"},
+  {top:"42vh",left:"7vw"}
+];
 
 function spawnDuck(){
-  const now=Date.now();
-  if(now-lastDuckTime<1800 || duckIndex>=duckMessages.length || current===4) return;
-  lastDuckTime=now;
+  if(duckIndex>=duckMessages.length || current===4) return;
 
   const d=document.createElement("div");
-  d.className="duck";
-  d.style.top=(16+Math.random()*66)+"vh";
-  d.style.left="-75px";
-  d.dataset.msg=duckMessages[duckIndex++];
+  d.className="duck duck-stopped";
+  const pos=duckPositions[duckIndex];
+  d.style.top=pos.top;
+  d.style.left=pos.left;
+  d.dataset.msg=duckMessages[duckIndex];
 
   const b=document.createElement("div");
-  b.className="duck-bubble";
+  b.className="duck-bubble hidden";
   b.textContent=d.dataset.msg;
   d.appendChild(b);
 
   d.addEventListener("click",()=>{
-    b.textContent=d.dataset.msg;
-    b.style.animation="none";
-    requestAnimationFrame(()=>b.style.animation="pop .25s ease");
+    b.classList.remove("hidden");
     burstHearts(12);
-    setTimeout(()=>d.remove(),2200);
+    d.classList.add("duck-found");
+    setTimeout(()=>d.remove(),5000);
   });
 
   $("#duckLayer").appendChild(d);
-  setTimeout(()=>d.remove(),4200);
+  duckIndex++;
 }
 
-/* Os três aparecem rapidamente, um após o outro, assim que a história começa. */
+/* Os três patinhos aparecem cedo, ficam parados em cantos diferentes
+   e só desaparecem depois que ela interage com eles. */
 function launchDucks(){
   if(current===4 || duckIndex>=3) return;
-  [400, 2300, 4200].forEach(delay=>setTimeout(()=>spawnDuck(),delay));
+  [700,2600,4500].forEach(delay=>setTimeout(()=>spawnDuck(),delay));
 }
-
-setTimeout(()=>launchDucks(),700);
-setInterval(()=>{
-  if(current!==4 && duckIndex<3) spawnDuck();
-},2200);
+setTimeout(launchDucks,500);
 
 $("#psButton").addEventListener("click",()=>{
   $("#ps").classList.remove("hidden"); burstHearts(20);
